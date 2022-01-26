@@ -119,7 +119,7 @@ import Auth from '../utils/auth';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(QUERY_ME);
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+  const [removeBook] = useMutation(REMOVE_BOOK);
   const userData = data?.me || {};
 
 
@@ -132,6 +132,7 @@ const SavedBooks = () => {
           return false;
     }
         try {
+            // eslint-disable-next-line
             const { data } = await removeBook({
                 variables: { bookId },
       });
@@ -155,7 +156,7 @@ const SavedBooks = () => {
       </Jumbotron>
       <Container>
         <h2>
-          {userData.savedBooks?.length
+          {userData.savedBooks.length
             ? `Viewing ${userData.savedBooks.length} saved ${
                 userData.savedBooks.length === 1 ? 'book' : 'books'
               }:`

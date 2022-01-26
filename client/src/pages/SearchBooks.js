@@ -171,6 +171,7 @@ const SearchBooks = () => {
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  // eslint-disable-next-line
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
@@ -222,6 +223,7 @@ const SearchBooks = () => {
           return false;
     }
         try {
+          // eslint-disable-next-line
           const { data } = await saveBook({
             variables: { bookData: { ...bookToSave } },
       });
@@ -282,15 +284,12 @@ const SearchBooks = () => {
                   <Card.Text>{book.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedBookIds?.some(
-                        (savedId) => savedId === book.bookId
-                      )}
-                      className="btn-block btn-info"
-                      onClick={() => handleSaveBook(book.bookId)}
-                    >
-                      {savedBookIds?.some((savedId) => savedId === book.bookId)
-                        ? 'Book Already Saved!'
-                        : 'Save This Book!'}
+                      disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveBook(book.bookId)}>
+                      {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
+                        ? 'This book has already been saved!'
+                        : 'Save this Book!'}
                     </Button>
                   )}
                 </Card.Body>
